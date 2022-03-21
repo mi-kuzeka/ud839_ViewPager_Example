@@ -2,26 +2,23 @@ package com.example.android.viewpager;
 
 import android.content.Context;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
+public class FixedTabsPagerAdapter extends FragmentStateAdapter {
     Context mContext;
 
-    public FixedTabsPagerAdapter(FragmentManager fm, Context context) {
-        super(fm);
-        mContext = context;
+    public FixedTabsPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+        super(fragmentManager, lifecycle);
     }
 
-    @Override
-    public int getCount() {
-        return 5;
-    }
 
+    @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         switch (position) {
             case 0:
                 return new MondayFragment();
@@ -38,24 +35,8 @@ public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    @Nullable
     @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return mContext.getString(R.string.monday_title);
-            case 1:
-                return mContext.getString(R.string.tuesday_title);
-            case 2:
-                return mContext.getString(R.string.wednesday_title);
-            case 3:
-                return mContext.getString(R.string.thursday_title);
-            case 4:
-                return mContext.getString(R.string.friday_title);
-            default:
-                return null;
-        }
+    public int getItemCount() {
+        return 5;
     }
-
-
 }

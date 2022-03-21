@@ -18,13 +18,16 @@ package com.example.android.viewpager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Displays a {@link ViewPager} where each page shows a different day of the week.
+ * Displays a {@link ViewPager2} where each page shows a different day of the week.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -36,15 +39,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Find the view pager that will allow the user to swipe between fragments
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager2 viewPager = (ViewPager2) findViewById(R.id.viewpager);
 
         // Create an adapter that knows which fragment should be shown on each page
-        PagerAdapter pagerAdapter = new FixedTabsPagerAdapter(getSupportFragmentManager(), this);
-
-        // Set the adapter onto the view pager
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(new FixedTabsPagerAdapter(getSupportFragmentManager(), getLifecycle()));
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager);
+        List<String> tabTitles = new ArrayList<>();
+        tabTitles.add(getString(R.string.monday_title));
+        tabTitles.add(getString(R.string.tuesday_title));
+        tabTitles.add(getString(R.string.wednesday_title));
+        tabTitles.add(getString(R.string.thursday_title));
+        tabTitles.add(getString(R.string.friday_title));
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            tab.setText(tabTitles.get(position));
+        }).attach();
     }
 }
