@@ -1,13 +1,13 @@
 package com.example.android.viewpager;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
-public class FixedTabsPagerAdapter extends SimpleFragmentPagerAdapter {
+public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
     Context mContext;
 
     public FixedTabsPagerAdapter(FragmentManager fm, Context context) {
